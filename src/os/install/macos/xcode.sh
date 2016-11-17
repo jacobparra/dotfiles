@@ -81,7 +81,7 @@ main() {
     print_in_purple "   Xcode\n\n"
 
     install_xcode_command_line_tools
-    install_xcode
+    # install_xcode
     set_xcode_developer_directory
     agree_with_xcode_licence
 
