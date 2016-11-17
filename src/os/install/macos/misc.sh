@@ -33,17 +33,9 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    brew_install "Git" "git"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     # brew_install "GPG" "gpg"
     # brew_install "GPG Agent" "gpg-agent"
     # brew_install "Pinentry" "pinentry-mac"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # brew_install "ImageAlpha" "imagealpha" "caskroom/cask" "cask"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -83,6 +75,15 @@ install_apps() {
     brew_install "Web Font Tools: TTF/OTF → WOFF (Zopfli)" "sfnt2woff-zopfli" "bramstein/webfonttools"
     brew_install "Web Font Tools: TTF/OTF → WOFF" "sfnt2woff" "bramstein/webfonttools"
     brew_install "Web Font Tools: WOFF2" "woff2" "bramstein/webfonttools"
+
+    #skype
+    #slack
+    #dropbox
+    #google-drive
+    # youtube-dl
+
+    # Install developer friendly quick look plugins; see https://github.com/sindresorhus/quick-look-plugins
+    brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package
 
 }
 

@@ -24,7 +24,6 @@ main() {
     print_in_purple "\n   Homebrew\n\n"
 
     install_homebrew
-    # opt_out_of_analytics
 
     brew_update
     brew_upgrade
