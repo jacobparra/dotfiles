@@ -27,27 +27,27 @@ alias empty-trash="sudo rm -frv /Volumes/*/.Trashes; \
 
 # Hide/Show desktop icons.
 
-alias hide-desktop-icons="defaults write com.apple.finder CreateDesktop -bool false \
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false \
                             && killall Finder"
 
-alias show-desktop-icons="defaults write com.apple.finder CreateDesktop -bool true \
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true \
                             && killall Finder"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Hide/Show hidden files in Finder.
 
-alias hide-hidden-files="defaults write com.apple.finder AppleShowAllFiles -bool false \
+alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -bool false \
                             && killall Finder"
 
-alias show-hidden-files="defaults write com.apple.finder AppleShowAllFiles -bool true \
+alias showhidden="defaults write com.apple.finder AppleShowAllFiles -bool true \
                             && killall Finder"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Get local IP.
 
-alias local-ip="ipconfig getifaddr en1"
+alias localip="ipconfig getifaddr en1"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -58,6 +58,6 @@ alias u="sudo softwareupdate --install --all \
             && brew upgrade \
             && brew cleanup \
             && npm install -g npm \
-            && npm update -g"
-
-            # sudo gem update --system; sudo gem update
+            && npm update -g \
+            && sudo gem update --system \
+            && sudo gem update"

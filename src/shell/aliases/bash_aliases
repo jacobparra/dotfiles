@@ -3,15 +3,22 @@
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
 alias cd..="cd .."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 alias :q="exit"
 alias c="clear"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias ll="ls -l"
-alias la="ls -la"
+
+# List all files in long format
+alias ll="ls -lF"
+# List all files in long format, including dot files
+alias la="ls -laF"
+
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 alias q="exit"
 alias rm="rm -rf --"
