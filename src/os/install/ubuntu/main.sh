@@ -14,21 +14,6 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # GnuPG archive keys of the Debian archive.
-
-    install_package "GnuPG archive keys" "debian-archive-keyring"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Software which is not included by default
-    # in Ubuntu due to legal or copyright reasons.
-
-    #install_package "Ubuntu Restricted Extras" "ubuntu-restricted-extras"
-
-    printf "\n"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     install_package "cURL" "curl"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,19 +22,7 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    install_package "ImageMagick" "imagemagick"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    install_package "ShellCheck" "shellcheck"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     install_package "tmux" "tmux"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    install_package "xclip" "xclip"
 
 }
 

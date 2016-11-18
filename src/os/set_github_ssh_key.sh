@@ -29,7 +29,10 @@ copy_public_ssh_key_to_clipboard () {
         print_result $? "Copy public SSH key to clipboard"
 
     else
-        print_warning "Please copy the public SSH key ($1) to clipboard"
+
+        cat $1
+        print_warning "Please copy the public SSH key to clipboard"
+
     fi
 
 }
@@ -46,6 +49,13 @@ generate_ssh_keys() {
 open_github_ssh_page() {
 
     declare -r GITHUB_SSH_URL="https://github.com/settings/ssh"
+
+    local os="$(get_os)"
+
+    if [ "$os" == "ubuntu" ]; then
+        ask "Please add the public SSH key to GitHub ($GITHUB_SSH_URL)"
+        return 0
+    fi
 
     # The order of the following checks matters
     # as on Ubuntu there is also a utility called `open`.
