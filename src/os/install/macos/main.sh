@@ -8,9 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 ./xcode.sh
 ./homebrew.sh
 ./bash.sh
-# ./gnu.sh
-# ./python.sh
-# ./ruby.sh
-# ./dev_tools.sh
-# ./fonts.sh
+./nvm.sh
+./development.sh
 ./misc.sh
+./fonts.sh

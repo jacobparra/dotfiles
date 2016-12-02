@@ -8,24 +8,20 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 install_apps() {
 
-    echo_warn "Installing fonts..."
-    brew cask install \
-    font-anonymous-pro \
-    font-dejavu-sans-mono-for-powerline \
-    font-droid-sans \
-    font-droid-sans-mono font-droid-sans-mono-for-powerline \
-    font-meslo-lg font-input \
-    font-inconsolata font-inconsolata-for-powerline \
-    font-liberation-mono font-liberation-mono-for-powerline \
-    font-liberation-sans \
-    font-meslo-lg \
-    font-nixie-one \
-    font-office-code-pro \
-    font-pt-mono \
-    font-roboto \
-    font-source-code-pro font-source-code-pro-for-powerline \
-    font-source-sans-pro \
-    font-ubuntu font-ubuntu-mono-powerline
+    brew_install "Anonymous Pro" "font-anonymous-pro" "caskroom/fonts" "cask"
+    brew_install "Droid Sans" "font-droid-sans" "caskroom/fonts" "cask"
+    brew_install "Droid Sans Mono" "font-droid-sans-mono" "caskroom/fonts" "cask"
+    brew_install "Inconsolata" "font-inconsolata" "caskroom/fonts" "cask"
+    brew_install "Input" "font-input" "caskroom/fonts" "cask"
+    brew_install "Liberation Mono" "font-liberation-mono" "caskroom/fonts" "cask"
+    brew_install "Liberation Sans" "font-liberation-sans" "caskroom/fonts" "cask"
+    brew_install "Office Code Pro" "font-office-code-pro" "caskroom/fonts" "cask"
+    brew_install "Open Sans" "font-open-sans" "caskroom/fonts" "cask"
+    brew_install "Pt Mono" "font-pt-mono" "caskroom/fonts" "cask"
+    brew_install "Roboto" "font-roboto" "caskroom/fonts" "cask"
+    brew_install "Source Code Pro" "font-source-code-pro" "caskroom/fonts" "cask"
+    brew_install "Source Sans Pro" "font-source-sans-pro" "caskroom/fonts" "cask"
+    brew_install "Ubuntu" "font-ubuntu" "caskroom/fonts" "cask"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
