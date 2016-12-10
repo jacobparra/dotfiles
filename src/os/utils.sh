@@ -11,6 +11,11 @@ ask() {
     read -r
 }
 
+ask_without_echo() {
+    print_question "$1"
+    read -s
+}
+
 ask_for_confirmation() {
     print_question "$1 (y/n) "
     read -r -n 1

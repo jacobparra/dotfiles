@@ -57,6 +57,8 @@ alias u="sudo softwareupdate --install --all \
             && brew update \
             && brew upgrade \
             && brew cleanup \
+            && pip install --upgrade pip setuptools virtualenv virtualenvwrapper \
+            && pip3 install --upgrade pip setuptools wheel \
             && npm install -g npm \
             && npm update -g \
             && sudo gem update --system \

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && . "../utils.sh"
+    && . "../../utils.sh"
 
 declare -r LOCAL_SHELL_CONFIG_FILE="$HOME/.bash.local"
 declare -r NVM_DIRECTORY="$HOME/.nvm"
@@ -68,11 +68,20 @@ update_nvm() {
 
 }
 
+install_npm_package() {
+
+    execute \
+        ". $LOCAL_SHELL_CONFIG_FILE \
+            && npm install --global --silent $2" \
+        "$1"
+
+}
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
 
-    print_in_purple "\n   nvm\n\n"
+    print_in_purple "\n   Node\n\n"
 
     if [ ! -d "$NVM_DIRECTORY" ]; then
         install_nvm
@@ -81,6 +90,8 @@ main() {
     fi
 
     install_latest_stable_node
+
+    install_npm_package "Yarn"  "yarn"
 
 }
 

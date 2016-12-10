@@ -4,11 +4,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-./os_updates.sh
+./updates.sh
 ./xcode.sh
 ./homebrew.sh
+./core.sh
 ./bash.sh
-./nvm.sh
-./development.sh
+./python.sh
+./ruby.sh
+./node.sh
+./tools.sh
 ./misc.sh
 ./fonts.sh

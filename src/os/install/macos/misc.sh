@@ -30,7 +30,9 @@ install_apps() {
 
     brew_install "Keka" "keka" "caskroom/cask" "cask"
 
-    brew_install "Prey" "prey" "caskroom/cask" "cask"
+    ask_without_echo "Please provide Prey API KEY (https://panel.preyproject.com/settings):" && printf "\n"
+    export API_KEY="$(get_answer)" \
+        && brew_install "Prey" "prey" "caskroom/cask" "cask"
 
     brew_install "Skype" "skype" "caskroom/cask" "cask"
 
@@ -40,12 +42,14 @@ install_apps() {
 
     brew_install "VLC" "vlc" "caskroom/cask" "cask"
 
-    brew_install youtube-dl
+    brew_install "youtube-dl" "youtube-dl"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Install developer friendly quick look plugins
     # see https://github.com/sindresorhus/quick-look-plugins
+    print_in_purple "   Quick Look Plugins\n"
+
     brew_install "betterzipql" "betterzipql" "caskroom/cask" "cask"
     brew_install "qlcolorcode" "qlcolorcode" "caskroom/cask" "cask"
     brew_install "qlimagesize" "qlimagesize" "caskroom/cask" "cask"
@@ -70,7 +74,6 @@ main() {
 
     install_apps
     printf "\n"
-    brew_cleanup
 
 }
 
