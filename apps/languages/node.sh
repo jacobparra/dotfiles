@@ -91,7 +91,9 @@ main() {
 
     install_latest_stable_node
 
-    install_npm_package "Yarn"  "yarn"
+    install_npm_package "ESLint"  "eslint"
+
+    brew_install "Yarn" "yarn"
 
 }
 
