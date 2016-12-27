@@ -15,7 +15,7 @@ add_virtualenvwrapper_configs() {
 
 # Python 2.7 Virtual Environments
 
-export PIP_REQUIRE_VIRTUALENV=truw
+export PIP_REQUIRE_VIRTUALENV=true
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code
