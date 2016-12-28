@@ -35,7 +35,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 update_pip() {
 
     execute \
-        "pip install --upgrade pip setuptools" \
+        "PIP_REQUIRE_VIRTUALENV="" pip install --upgrade pip setuptools" \
         "Update pip"
 
 }
@@ -43,7 +43,7 @@ update_pip() {
 install_pip_package() {
 
     execute \
-        "pip install $2" \
+        "PIP_REQUIRE_VIRTUALENV="" pip install $2" \
         "$1"
 
 }
@@ -61,7 +61,7 @@ install_python() {
 update_pip3() {
 
     execute \
-        "pip3 install --upgrade pip setuptools wheel" \
+        "PIP_REQUIRE_VIRTUALENV="" pip3 install --upgrade pip setuptools wheel" \
         "Update pip3"
 
 }
