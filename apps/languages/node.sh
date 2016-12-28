@@ -1,7 +1,8 @@
 #!/bin/bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && . "../../utils.sh"
+    && . "../../utils.sh" \
+    && . "../utils_macos.sh"
 
 declare -r LOCAL_SHELL_CONFIG_FILE="$HOME/.bash.local"
 declare -r NVM_DIRECTORY="$HOME/.nvm"
