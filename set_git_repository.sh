@@ -36,7 +36,7 @@ main() {
     if ! is_git_repository; then
 
         print_title "Set Git repository"
-        initialize_git_repository "$1"
+        set_git_repository "$1"
 
     fi
 
