@@ -7,7 +7,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_title "Core utilities"
 
-./bash.sh
 ./gnu.sh
 ./other.sh
 ./outdated.sh
+./bash.sh
