@@ -112,7 +112,7 @@ download_dotfiles() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    cd "$dotfilesDirectory/os" \
+    cd "$dotfilesDirectory" \
         || return 1
 
 }
