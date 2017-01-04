@@ -13,9 +13,13 @@ add_rbenv_configs() {
     declare -r CONFIGS="
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Ruby rbenv
+# Ruby rbenv and binstubs
 
 eval \"\$(rbenv init -)\"
+
+PATH="./bin:$PATH"
+
+export PATH
 "
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
