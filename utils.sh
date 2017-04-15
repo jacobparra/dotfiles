@@ -246,20 +246,15 @@ cmd_exists() {
 
 skip_questions() {
 
-     while :; do
+    while [ $# -gt 0 ]; do
         case $1 in
             -y|--yes) return 0;;
-                   *) break;;
         esac
         shift 1
     done
 
     return 1
 
-}
-
-is_git_repository() {
-    git rev-parse &> /dev/null
 }
 
 get_os() {

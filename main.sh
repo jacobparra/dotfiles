@@ -263,17 +263,7 @@ main() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     if cmd_exists "git"; then
-
-        if [ "$(git config --get remote.origin.url)" != "$DOTFILES_ORIGIN" ]; then
-            ./set_git_repository.sh "$DOTFILES_ORIGIN"
-        fi
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        if ! $skipQuestions; then
-            ./update_repository.sh
-        fi
-
+        ./update_git_repository.sh "$DOTFILES_ORIGIN" "$@"
     fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
