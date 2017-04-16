@@ -8,7 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 set_github_ssh_key() {
 
     local sshKeyFileName="$HOME/.ssh/github"
-    
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ssh -T git@github.com &> /dev/null
@@ -61,7 +61,7 @@ set_github_ssh_key() {
         cat ${sshKeyFileName}.pub
         print_warning "Please copy the public SSH key to clipboard"
     fi
-    
+
     rm "${sshKeyFileName}.pub"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,7 +133,7 @@ update_git_repository () {
             return 0
         fi
     fi
-    
+
     git fetch --all 1> /dev/null \
         && git reset --hard origin/master 1> /dev/null \
         && git clean -fd 1> /dev/null
@@ -147,6 +147,11 @@ update_git_repository () {
 main() {
 
     print_title "Update Git repository"
+
+    if ! cmd_exists "git"; then
+        print_error "Git is not installed"
+        return 1
+    fi
 
     set_github_ssh_key
     set_git_repository "$1"
