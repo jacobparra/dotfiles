@@ -5,7 +5,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_title "Setup macOS"
+if [ "$(get_os)" == "macos" ]; then
+    print_title "Setup macOS"
 
-./xcode.sh
-./homebrew.sh
+    ./xcode.sh
+    ./homebrew.sh
+fi
