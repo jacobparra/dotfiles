@@ -146,55 +146,19 @@ extract() {
 
 }
 
-verify_os() {
+restart() {
+    print_title "Restart"
 
-    declare -r MINIMUM_MACOS_VERSION="10.10"
-    declare -r MINIMUM_UBUNTU_VERSION="14.04"
-
-    local os_name=""
-    local os_version=""
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Check if the OS is `macOS` and
-    # it's above the required version.
-
-    os_name="$(uname -s)"
-
-    if [ "$os_name" == "Darwin" ]; then
-
-        os_version="$(sw_vers -productVersion)"
-
-        if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
+    if ! $skipQuestions; then
+        ask_for_confirmation "Do you want to restart?"
+        if ! answer_is_yes; then
             return 0
-        else
-            printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
         fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Check if the OS is `Ubuntu` and
-    # it's above the required version.
-
-    elif [ "$os_name" == "Linux" ] && [ -e "/etc/lsb-release" ]; then
-
-        os_version="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
-
-        if is_supported_version "$os_version" "$MINIMUM_UBUNTU_VERSION"; then
-            return 0
-        else
-            printf "Sorry, this script is intended only for Ubuntu %s+" "$MINIMUM_UBUNTU_VERSION"
-        fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    else
-        printf "Sorry, this script is intended only for macOS and Ubuntu!"
     fi
 
-    return 1
+    sudo shutdown -r now &> /dev/null
 
-}
+ }
 
 # ----------------------------------------------------------------------
 # | Main                                                               |
@@ -220,14 +184,6 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # Ensure the OS is supported and
-    # it's above the required version.
-
-    verify_os \
-        || exit 1
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     skip_questions "$@" \
         && skipQuestions=true
 
@@ -241,16 +197,16 @@ main() {
     # and if not, it most likely means that the dotfiles were not
     # yet set up, and they will need to be downloaded.
 
-    printf "%s" "${BASH_SOURCE[0]}" | grep "setup.sh" &> /dev/null \
+    printf "%s" "${BASH_SOURCE[0]}" | grep "main.sh" &> /dev/null \
         || download_dotfiles
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    "./setup/setup_$(get_os).sh"
+    # "./setup/setup_$(get_os).sh"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ./dotfiles/dotfiles.sh "$@"
+    # ./dotfiles/dotfiles.sh "$@"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -258,19 +214,15 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ./apps/apps.sh
+    # ./apps/apps.sh
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if cmd_exists "git"; then
-        ./update_git_repository.sh "$DOTFILES_ORIGIN" "$@"
-    fi
+    ./update_git_repository.sh "$DOTFILES_ORIGIN" "$@"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if ! $skipQuestions; then
-        ./restart.sh
-    fi
+    restart
 
 }
 
