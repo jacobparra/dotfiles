@@ -36,13 +36,15 @@ install_apps() {
 
     brew_install "Skype" "skype" "caskroom/cask" "cask"
 
+    brew_install "Slack" "slack" "caskroom/cask" "cask"
+
     brew_install "Spectacle" "spectacle" "caskroom/cask" "cask"
 
-    brew_install "Utorrent" "utorrent" "caskroom/cask" "cask"
+    brew_install "Spotify" "spotify" "caskroom/cask" "cask"
+
+    brew_install "Transmission" "transmission" "caskroom/cask" "cask"
 
     brew_install "VLC" "vlc" "caskroom/cask" "cask"
-
-    brew_install "youtube-dl" "youtube-dl"
 
 }
 
