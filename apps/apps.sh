@@ -10,7 +10,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 ./fonts/fonts.sh
 ./languages/languages.sh
 ./tools/tools.sh
-./tools/vim.sh
 ./misc/misc.sh
 ./misc/qlplugins.sh
 
