@@ -1,0 +1,66 @@
+[color "branch"]
+
+    current = green bold
+    local = green
+    remote = yellow
+
+[color "diff"]
+
+    frag = magenta
+    meta = yellow
+    new = green
+    old = red
+
+[color "status"]
+
+    added = green
+    changed = yellow
+    untracked = red
+
+[core]
+
+    abbrev = 12
+    attributesfile = ~/.gitattributes
+    autocrlf = input
+    editor = vim
+    excludesfile = ~/.gitignore
+
+[diff "bin"]
+
+    # Use `hexdump` to diff binary files.
+
+    textconv = hexdump -v -C
+
+[pretty]
+
+    custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
+    #                     │        │            │            │             └─ author name
+    #                     │        │            │            └─ message
+    #                     │        │            └─ date (relative)
+    #                     │        └─ decorations (branch, heads or tags)
+    #                     └─ hash (abbreviated)
+
+
+[push]
+
+    # Make `git push` automatically push relevant
+    # annotated tags when pushing branches out.
+
+    followTags = true
+
+[commit]
+
+    # Sign commits using GPG.
+    # https://help.github.com/articles/signing-commits-using-gpg/
+
+    # gpgsign = true
+
+[user]
+
+    # Don't guess the user's identity.
+    # https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/Documentation/config.txt#L2847-L2855
+
+    useConfigOnly = true
+    name = "Jacob Parra"
+    email = "jacobrpg@gmail.com"
+    # signingkey =

@@ -1,0 +1,14 @@
+Host *
+  IdentityFile ~/.ssh/id_rsa
+  IgnoreUnknown UseKeychain
+  AddKeysToAgent yes
+  UseKeychain yes
+
+Host hassbian
+   HostName hassbian.local
+   User pi
+
+Host github.com
+  IdentityFile /Users/jacob/.ssh/github
+  IdentitiesOnly yes
+  LogLevel ERROR

@@ -1,25 +1,11 @@
 #!/bin/bash
 
-# mkd() {
-#     if [ -n "$1" ]; then
-#         if [ -e "$1" ]; then
-#             if [ ! -d "$1" ]; then
-#                 print_error "$1 - a file with the same name already exists!"
-#             else
-#                 print_success "$1"
-#             fi
-#         else
-#             execute "mkdir -p $1" "$1"
-#         fi
-#     fi
-# }
-
 print_title() {
-    _print_in_purple "\n • $1\n"
+    _print_in_purple "\n • $1\n\n"
 }
 
 print_subtitle() {
-    _print_in_purple "\n   $1\n\n"
+    _print_in_purple "\n   $1\n"
 }
 
 print_question() {
@@ -74,25 +60,6 @@ ask_for_confirmation() {
     print_question "$1 (y/n) "
     read -r -n 1
     printf "\n"
-}
-
-ask_for_sudo() {
-
-    # Ask for the administrator password upfront.
-
-    sudo -v &> /dev/null
-
-    # Update existing `sudo` time stamp
-    # until this script has finished.
-    #
-    # https://gist.github.com/cowboy/3118588
-
-    while true; do
-        sudo -n true
-        sleep 60
-        kill -0 "$$" || exit
-    done &> /dev/null &
-
 }
 
 execute() {
@@ -154,108 +121,49 @@ execute() {
 
 }
 
-create_symlink() {
-
-    local sourceFile="$1"
-    local targetFile=""
-    local skipQuestions=false
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    skip_questions "$@" \
-        && skipQuestions=true
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    targetFile="$HOME/.$(printf "%s" "$(basename $sourceFile)" | sed "s/.*\/\(.*\)/\1/g")"
-
-    if [ ! -e "$targetFile" ] || $skipQuestions; then
-
-        execute \
-            "ln -fs $sourceFile $targetFile" \
-            "$targetFile → $sourceFile"
-
-    elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-        print_success "$targetFile → $sourceFile"
-    else
-
-        if ! $skipQuestions; then
-
-            ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-            if answer_is_yes; then
-
-                rm -rf "$targetFile"
-
-                execute \
-                    "ln -fs $sourceFile $targetFile" \
-                    "$targetFile → $sourceFile"
-
-            else
-                print_error "$targetFile → $sourceFile"
-            fi
-
-        fi
-
-    fi
-
-}
-
-# append_to_local_shell_config_file() {
-#
-#     declare -r FILE_PATHFILE_PATH="$HOME/.bash.local"
-#
-#     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#
-#     if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
-#         printf "%s\n\n" "#!/bin/bash" >> "$FILE_PATH"
-#         print_result $? "Create $FILE_PATH"
-#     fi
-#
-#     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#
-#     if ! grep "$1" < "$FILE_PATH" &> /dev/null; then
-#         execute \
-#             "printf '%s' '$configs' >> $FILE_PATH \
-#                 && . $FILE_PATH" \
-#             "$2 (update $FILE_PATH)"
-#     fi
-# }
-
 cmd_exists() {
     command -v "$1" &> /dev/null
 }
 
-skip_questions() {
+brew_install() {
 
-    while [ $# -gt 0 ]; do
-        case $1 in
-            -y|--yes) return 0;;
-        esac
-        shift 1
-    done
-
-    return 1
-
-}
-
-get_os() {
-
-    local os=""
-    local kernelName=""
+    declare -r CMD="$3"
+    declare -r FORMULA="$2"
+    declare -r FORMULA_READABLE_NAME="$1"
+    declare -r TAP_VALUE="$4"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    kernelName="$(uname -s)"
+    # Check if `Homebrew` is installed.
 
-    if [ "$kernelName" == "Darwin" ]; then
-        os="macos"
-    elif [ "$kernelName" == "Linux" ] && [ -e "/etc/lsb-release" ]; then
-        os="ubuntu"
-    else
-        os="$kernelName"
+    if ! cmd_exists "brew"; then
+        print_error "$FORMULA_READABLE_NAME ('Homebrew' is not installed)"
+        return 1
     fi
 
-    printf "%s" "$os"
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # If `brew tap` needs to be executed,
+    # check if it executed correctly.
+
+    if [ -n "$TAP_VALUE" ]; then
+        if ! brew tap "$TAP_VALUE" &> /dev/null; then
+            print_error "$FORMULA_READABLE_NAME ('brew tap $TAP_VALUE' failed)"
+            return 1
+        fi
+    fi
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Install the specified formula.
+
+    if brew $CMD list "$FORMULA" &> /dev/null; then
+        print_success "$FORMULA_READABLE_NAME"
+    else
+        execute \
+            "brew $CMD install $FORMULA" \
+            "$FORMULA_READABLE_NAME"
+    fi
 
 }
 
