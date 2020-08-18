@@ -93,13 +93,20 @@ export NVM_DIR="$HOME/.nvm"
 # Python
 eval "$(pyenv init -)"
 eval "$(pipenv --completion)"
+export PYTHONDONTWRITEBYTECODE=1
 
 # Ruby
 eval "$(rbenv init -)"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 export PATH="./bin:$PATH" # binstubs
 
-# PostgreSQL
-export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+# Yarn
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# AWS Elastic Beanstalk
+export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
+
+# Poetry (python)
+export PATH="$HOME/.poetry/bin:$PATH"
 
 alias dco="docker-compose"
