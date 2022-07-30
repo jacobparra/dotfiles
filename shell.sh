@@ -56,6 +56,8 @@ else
         "zsh-autosuggestions"
 fi
 
+brew_install "Font Nerd Fonts" "font-hack-nerd-font" "homebrew/cask-fonts"
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print_subtitle "Create symbolic links"

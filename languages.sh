@@ -3,66 +3,49 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" \
     && . "utils.sh" \
 
+declare -a LANGUAGES_TO_INSTALL=(
+    'nodejs::NodeJS'
+    'python::Python'
+    'ruby::Ruby'
+)
+
 ###################################################################
 
-print_title "Setup NodeJS"
+print_title "Setup languages"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! cmd_exists "nvm"; then
+brew_install "ASDF" "asdf"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+declare language=""
+declare language_key=""
+declare language_label=""
+
+for language in "${LANGUAGES_TO_INSTALL[@]}"; do
+
+    language_key="${language%%::*}"
+    language_label="${language##*::}"
+
+    print_subtitle "$language_label"
+
+    asdf plugin-add $language_key &> /dev/null
+
+    if asdf plugin-add $language_key &> /dev/null; then
+        execute \
+            "asdf plugin-add $language_key" \
+            "Add $language_label plugin"
+    else
+        print_success "Add $language_label plugin"
+    fi
+
     execute \
-        "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh)" \
-        "NVM"
-else
+        "asdf install $language_key latest" \
+        "Install latest $language_label"
+
     execute \
-        "nvm_get_latest" \
-        "NVM"
-fi
+        "asdf global $language_key latest" \
+        "Set latest $language_label as global"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-execute \
-    ". $HOME/.nvm/nvm.sh \
-        && nvm install --lts" \
-    "Node (LTS)"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-execute \
-    ". $HOME/.nvm/nvm.sh \
-        && nvm_install_latest_npm" \
-    "NPM"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-brew_install "Yarn" "yarn --ignore-dependencies"
-
-###################################################################
-
-print_title "Setup Python"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-brew_install "Pyenv" "pyenv"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-brew_install "Pipenv" "pipenv"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_subtitle "Suggested build environment"
-
-brew_install "openssl" "openssl"
-brew_install "readline" "readline"
-brew_install "sqlite3" "sqlite3"
-brew_install "xz" "xz"
-brew_install "zlib" "zlib"
-
-###################################################################
-
-print_title "Setup Ruby"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-brew_install "rbenv" "rbenv"
+done

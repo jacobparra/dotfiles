@@ -127,10 +127,9 @@ cmd_exists() {
 
 brew_install() {
 
-    declare -r CMD="$3"
     declare -r FORMULA="$2"
     declare -r FORMULA_READABLE_NAME="$1"
-    declare -r TAP_VALUE="$4"
+    declare -r TAP_VALUE="$3"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -157,11 +156,11 @@ brew_install() {
 
     # Install the specified formula.
 
-    if brew $CMD list "$FORMULA" &> /dev/null; then
+    if brew list "$FORMULA" &> /dev/null; then
         print_success "$FORMULA_READABLE_NAME"
     else
         execute \
-            "brew $CMD install $FORMULA" \
+            "brew install $FORMULA" \
             "$FORMULA_READABLE_NAME"
     fi
 

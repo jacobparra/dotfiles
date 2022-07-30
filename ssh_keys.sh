@@ -11,7 +11,7 @@ print_title "Setup Github SSH keys"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-ssh -T git@github.com &> /dev/null
+ssh -T git@github.com -i $SSH_KEY_FILENAME &> /dev/null
 
 if [ $? -eq 1 ]; then
     print_success "Successfully authenticated"

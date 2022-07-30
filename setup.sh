@@ -26,7 +26,6 @@ done &> /dev/null &
 ./shell.sh
 ./languages.sh
 ./apps.sh
-./preferences.sh
 
 ###################################################################
 
