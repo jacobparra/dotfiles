@@ -105,6 +105,10 @@ export LANG=en_US.UTF-8
 # export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 # export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 
+# PlatformIO, avoid conflict with VSCode and local
+# https://docs.platformio.org/en/latest/core/installation.html#method-1
+export PATH=$PATH:~/.platformio/penv/bin
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
