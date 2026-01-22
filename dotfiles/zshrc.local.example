@@ -1,0 +1,18 @@
+# Machine-specific shell config
+# Copy this file to ~/.zshrc.local and customize
+#
+# This file is sourced by ~/.zshrc at the end
+# and is NOT versioned in git
+
+# Example: Personal machine
+# alias homelab="ssh homelab"
+# export PROJECTS=~/Code
+
+# Example: Work machine
+# alias k="kubectl"
+# alias vpn="networksetup -connectpppoeservice 'Company VPN'"
+# export KUBECONFIG=~/.kube/work-config
+# export WORK_PROJECT=~/Work/main-repo
+
+# Example: Add to PATH
+# export PATH="$HOME/.local/bin:$PATH"

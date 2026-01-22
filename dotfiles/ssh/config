@@ -1,12 +1,9 @@
+# Load machine-specific config (not versioned)
+Include config.local
+
 Host *
-  IdentityFile ~/.ssh/id_rsa
   IgnoreUnknown UseKeychain
   AddKeysToAgent yes
-  UseKeychain yes
-
-Host homeassistant
-   HostName homeassistant.local
-   User root
 
 Host github.com
   IdentityFile /Users/jacob/.ssh/github

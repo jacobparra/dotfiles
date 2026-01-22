@@ -56,7 +56,7 @@ else
         "zsh-autosuggestions"
 fi
 
-brew_install "Font Nerd Fonts" "font-hack-nerd-font" "homebrew/cask-fonts"
+brew_install "Font Nerd Fonts" "font-hack-nerd-font"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -102,4 +102,31 @@ for i in "${FILES_TO_SYMLINK[@]}"; do
 
     fi
 
+done
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_subtitle "Create local config files"
+
+declare -a LOCAL_EXAMPLES=(
+    "ssh/config.local.example"
+    "zshrc.local.example"
+)
+
+declare -a LOCAL_TARGETS=(
+    "$HOME/.ssh/config.local"
+    "$HOME/.zshrc.local"
+)
+
+for idx in "${!LOCAL_EXAMPLES[@]}"; do
+    sourceFile="$DOTFILES_FOLDER/${LOCAL_EXAMPLES[$idx]}"
+    targetFile="${LOCAL_TARGETS[$idx]}"
+
+    if [ -e "$targetFile" ]; then
+        print_success "$targetFile (already exists)"
+    else
+        execute \
+            "cp $sourceFile $targetFile" \
+            "$targetFile (created from example)"
+    fi
 done

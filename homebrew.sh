@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 ###################################################################
 
-print_title "Setup macOS"
+print_title "Setup Homebrew and Xcode Command Line Tools"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Install Xcode Command Line Tools

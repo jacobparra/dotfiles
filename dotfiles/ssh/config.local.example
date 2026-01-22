@@ -1,0 +1,21 @@
+# Machine-specific SSH config
+# Copy this file to ~/.ssh/config.local and customize
+#
+# This file is loaded by ~/.ssh/config via Include directive
+# and is NOT versioned in git
+
+# Example: Personal server
+# Host homelab
+#   HostName homelab.local
+#   User jacob
+
+# Example: Work servers
+# Host work-*
+#   User jacob.smith
+#   IdentityFile ~/.ssh/work_ed25519
+#
+# Host work-prod
+#   HostName prod.company.com
+#
+# Host work-staging
+#   HostName staging.company.com
