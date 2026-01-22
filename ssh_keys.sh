@@ -21,7 +21,7 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ask "Please provide an email address: " && printf "\n"
-ssh-keygen -t rsa -b 4096 -C "$(get_answer)" -f "$SSH_KEY_FILENAME"
+ssh-keygen -t ed25519 -C "$(get_answer)" -f "$SSH_KEY_FILENAME"
 
 print_result $? "Generate SSH keys"
 
