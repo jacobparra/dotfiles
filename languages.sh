@@ -4,9 +4,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
     && . "utils.sh" \
 
 declare -a LANGUAGES_TO_INSTALL=(
-    'nodejs::NodeJS'
+    'nodejs::Node.js'
     'python::Python'
-    'ruby::Ruby'
 )
 
 ###################################################################
@@ -28,16 +27,12 @@ for language in "${LANGUAGES_TO_INSTALL[@]}"; do
     language_key="${language%%::*}"
     language_label="${language##*::}"
 
-    print_subtitle "$language_label"
+    print_subtitle "$language_key"
 
-    asdf plugin-add $language_key &> /dev/null
-
-    if asdf plugin-add $language_key &> /dev/null; then
-        execute \
-            "asdf plugin-add $language_key" \
-            "Add $language_label plugin"
-    else
+    if asdf plugin add "$language_key" &> /dev/null; then
         print_success "Add $language_label plugin"
+    else
+        print_success "Add $language_label plugin (already installed)"
     fi
 
     execute \
@@ -45,7 +40,7 @@ for language in "${LANGUAGES_TO_INSTALL[@]}"; do
         "Install latest $language_label"
 
     execute \
-        "asdf global $language_key latest" \
-        "Set latest $language_label as global"
+        "asdf set --home $language_key latest" \
+        "Set latest $language_label as default"
 
 done

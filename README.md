@@ -18,11 +18,11 @@ That's it! :sparkles:
 The setup process will:
 
 * Clone the dotfiles on your computer.
-* Setup [SSH keys](ssh_keys.sh) for github.
+* Setup [Homebrew](homebrew.sh) including Xcode Command Line Tools.
 * Setup [Zsh shell](shell.sh) with [Oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) and [Powerlevel10k](https://github.com/romkatv/powerlevel10k).
 * Install [languages](languages.sh) for web development (`NodeJS`, `Python` and `Ruby`).
 * Install [applications / command-line tools](apps.sh) for macOS.
-* Set custom macOS [preferences](preferences.sh).
+* Setup [Github SSH key](github_ssh.sh) for github.
 
 ### Forks
 

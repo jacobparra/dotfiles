@@ -15,17 +15,14 @@ Full setup (runs all scripts in order):
 
 Individual scripts can be run separately:
 ```bash
-./macos.sh      # Xcode CLI tools + Homebrew
-./ssh_keys.sh   # GitHub SSH key setup
+./homebrew.sh      # Xcode CLI tools + Homebrew
 ./shell.sh      # Zsh + Oh-my-zsh + Powerlevel10k + symlinks
 ./languages.sh  # Node.js, Python, Ruby via asdf
 ./apps.sh       # macOS applications via Homebrew
+./github_ssh.sh   # GitHub SSH key setup
 ```
 
 ## Architecture
-
-### Script Execution Flow
-`setup.sh` → `ssh_keys.sh` → `macos.sh` → `shell.sh` → `languages.sh` → `apps.sh`
 
 ### Key Files
 - **utils.sh**: Shared utilities used by all scripts
