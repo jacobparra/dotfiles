@@ -23,10 +23,17 @@ execute \
 # Install homebrew
 
 if ! cmd_exists "brew"; then
-    printf "\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" &> /dev/null
-    #  └─ simulate the ENTER keypress
+    print_subtitle "Installing Homebrew (requires sudo)..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    print_result $? "Homebrew (install)"
+
+    # Add brew to PATH for Apple Silicon Macs
+    if [[ -f "/opt/homebrew/bin/brew" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+else
+    print_success "Homebrew (already installed)"
 fi
-print_result $? "Homebrew"
 
 execute \
     "brew update" \
