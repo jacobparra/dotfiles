@@ -36,11 +36,7 @@ for language in "${LANGUAGES_TO_INSTALL[@]}"; do
     fi
 
     execute \
-        "asdf install $language_key latest" \
-        "Install latest $language_label"
-
-    execute \
-        "asdf set --home $language_key latest" \
-        "Set latest $language_label as default"
+        "asdf set --home $language_key system" \
+        "Set $language_label to use system (Homebrew) version"
 
 done
