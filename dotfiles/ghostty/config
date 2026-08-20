@@ -1,0 +1,24 @@
+# Ghostty configuration.
+# Docs: https://ghostty.org/docs/config
+
+# Appearance. Both themes ship with Ghostty, so the palette needs no manual
+# copy; the light/dark pair follows the macOS appearance setting.
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+font-family = Hack Nerd Font Mono
+font-size = 14
+
+# On U.S. layouts Ghostty defaults to treating Option as Alt, which breaks
+# the dead keys used to type Spanish: Option+E for accents, Option+N for n.
+# Both Option keys stay as macOS composing keys instead. This gives up the
+# Alt+<letter> bindings in zsh, but not Option+Arrows or Option+Backspace,
+# which produce no printable character and are treated as Alt regardless.
+macos-option-as-alt = false
+
+# Ghostty cannot do unlimited scrollback yet, so raise the cap instead.
+# The value is bytes per surface; the default is 10MB.
+scrollback-limit = 100000000
+
+# Ghostty sets TERM=xterm-ghostty, which remote hosts do not know about.
+# ssh-terminfo installs the entry on first connect (needs infocmp here and
+# tic there); ssh-env falls back to xterm-256color when that fails.
+shell-integration-features = ssh-env,ssh-terminfo

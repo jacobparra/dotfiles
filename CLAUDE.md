@@ -35,6 +35,7 @@ Individual scripts can be run separately:
   - `zshrc`, `p10k.zsh`: Shell configuration
   - `gitconfig`, `gitattributes`, `gitignore`: Git configuration
   - `ssh/config`: SSH configuration
+  - `ghostty/config`: Ghostty terminal configuration
 
 - **iterm2/**: iTerm2 preferences (loaded via defaults)
 
@@ -43,3 +44,4 @@ Individual scripts can be run separately:
 - The `execute` function runs commands in background without TTY access. Interactive commands (like Homebrew install) must be run directly.
 - Apple Silicon Macs have Homebrew at `/opt/homebrew/bin/brew` (requires PATH setup).
 - Language versions are managed via asdf (installs latest versions globally).
+- Most dotfiles are symlinked as `$HOME/.<name>`, but Ghostty reads from `$XDG_CONFIG_HOME/ghostty/config`, so `shell.sh` links it separately.

@@ -103,6 +103,24 @@ for i in "${FILES_TO_SYMLINK[@]}"; do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Ghostty reads its config from XDG, not from a dotfile in $HOME, so it
+# needs its own link rather than a slot in FILES_TO_SYMLINK above.
+
+sourceFile="$DOTFILES_FOLDER/ghostty/config"
+targetFile="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
+
+mkdir -p "$(dirname "$targetFile")"
+
+if [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
+    print_success "$targetFile → $sourceFile"
+else
+    rm -rf "$targetFile"
+    execute \
+        "ln -fs $sourceFile $targetFile" \
+        "$targetFile → $sourceFile"
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print_subtitle "Create local config files"
 
