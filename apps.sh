@@ -20,44 +20,36 @@ execute \
     "defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true" \
     "Iterm2: Use the custom preferences directory"
 
+brew_install "Ghostty" "ghostty"
+
 brew_install "Visual Studio Code" "visual-studio-code"
 
 brew_install "Docker Desktop" "docker-desktop"
 
 brew_install "Postman" "postman"
 
-brew_install "Raspberry Pi Imager" "raspberry-pi-imager"
-
-brew_install "Android Platform Tools" "android-platform-tools"
-
-brew_install "Silicon Labs Driver" "silicon-labs-vcp-driver"
-
 # Productivity
 
 brew_install "Google Chrome" "google-chrome"
 
-brew_install "Google Drive" "google-drive"
-
 brew_install "Claude" "claude"
+
+brew_install "ClaudeMeter" "claudemeter" "eddmann/tap"
 
 brew_install "Keka" "keka"
 
-brew_install "Logitech Options" "logitech-options"
+brew_install "Logi Options+" "logi-options+"
 
 brew_install "MonitorControl" "monitorcontrol"
 
 brew_install "OrcaSlicer" "orcaslicer"
 
-# Entertainment
+###################################################################
 
-brew_install "Spotify" "spotify"
-
-brew_install "VLC" "vlc"
-
-brew_install "Transmission" "transmission"
-
-# Communication
-
-brew_install "Zoom" "zoom"
-
-brew_install "Telegram" "telegram"
+# Installed by hand, on purpose — not part of the initial setup:
+#
+#   - Microsoft Teams (work account, installed manually)
+#   - Raspberry Pi Imager: brew install raspberry-pi-imager
+#
+# Note: the silicon-labs-vcp-driver cask is no longer needed; macOS ships
+# the native CP210x driver (AppleUSBSLCOM) since Big Sur.
