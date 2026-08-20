@@ -1,21 +1,38 @@
 # Machine-specific SSH config
-# Copy this file to ~/.ssh/config.local and customize
+# Copy to ~/.ssh/config.local and customize (setup.sh does this for you).
 #
-# This file is loaded by ~/.ssh/config via Include directive
-# and is NOT versioned in git
+# Loaded by ~/.ssh/config via its Include directive and NOT versioned in
+# git, so anything host-, employer- or client-specific belongs here
+# rather than in the tracked config: this repo is public.
 
-# Example: Personal server
-# Host homelab
-#   HostName homelab.local
-#   User jacob
+# - - - Work - - -
 
-# Example: Work servers
-# Host work-*
-#   User jacob.smith
+# Host gitlab.example.com
 #   IdentityFile ~/.ssh/work_ed25519
-#
-# Host work-prod
-#   HostName prod.company.com
-#
-# Host work-staging
-#   HostName staging.company.com
+#   IdentitiesOnly yes
+#   LogLevel ERROR
+
+# A second GitHub account: the alias carries the key, HostName points at
+# the real server. Clone with git@github-work:org/repo.git
+# Host github-work
+#   HostName github.com
+#   IdentityFile ~/.ssh/github_work
+#   IdentitiesOnly yes
+
+# - - - Personal servers - - -
+
+# Host homelab
+#   HostName homelab.example.com
+#   User jacob
+#   IdentityFile ~/.ssh/personal_ed25519
+#   IdentitiesOnly yes
+
+# - - - Hosts sharing a domain - - -
+# %h expands to the alias typed on the command line, so several hosts
+# under one domain need a single block: `ssh staging` resolves to
+# staging.example.com
+# Host staging prod
+#   HostName %h.example.com
+#   User jacob
+#   IdentityFile ~/.ssh/client_ed25519
+#   IdentitiesOnly yes

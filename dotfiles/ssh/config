@@ -1,11 +1,14 @@
 # Load machine-specific config (not versioned)
 Include config.local
 
+Host github.com
+  IdentityFile ~/.ssh/github
+  IdentitiesOnly yes
+  LogLevel ERROR
+
+# Keep this block last: ssh_config applies the first value it finds for
+# each keyword, so a catch-all placed above would win over the host
+# blocks instead of acting as a fallback for them.
 Host *
   IgnoreUnknown UseKeychain
   AddKeysToAgent yes
-
-Host github.com
-  IdentityFile /Users/jacob/.ssh/github
-  IdentitiesOnly yes
-  LogLevel ERROR
