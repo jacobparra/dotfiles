@@ -4,8 +4,12 @@
 # Appearance. Both themes ship with Ghostty, so the palette needs no manual
 # copy; the light/dark pair follows the macOS appearance setting.
 theme = light:Catppuccin Latte,dark:Catppuccin Mocha
-font-family = Hack Nerd Font Mono
+font-family = JetBrainsMono Nerd Font Mono
 font-size = 14
+
+# The external Dell runs at ~110ppi with no HiDPI scaling, and macOS dropped
+# subpixel antialiasing, so thin strokes look washed out there.
+font-thicken = true
 
 # On U.S. layouts Ghostty defaults to treating Option as Alt, which breaks
 # the dead keys used to type Spanish: Option+E for accents, Option+N for n.

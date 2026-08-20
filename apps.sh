@@ -9,8 +9,7 @@ print_title "Apps"
 
 # Dev Tools
 
-brew_install "Font Hack Nerd" "font-hack-nerd-font"
-brew_install "Font Fira Code" "font-fira-code"
+brew_install "Font JetBrains Mono Nerd" "font-jetbrains-mono-nerd-font"
 
 brew_install "Iterm2" "iterm2"
 execute \
