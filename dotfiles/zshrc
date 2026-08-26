@@ -112,5 +112,29 @@ export LANG=en_US.UTF-8
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Claude Code accounts
+# No default profile: ~/.claude must not exist, so any invocation that skips
+# these functions (the VS Code extension, hooks, cron) lands on an unauthenticated
+# profile instead of silently using the personal account.
+# The Keychain item name derives from a hash of this exact string, so never
+# change the spelling (a trailing slash yields a different item and a lost login).
+claude-personal() {
+  CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command claude "$@"
+}
+
+claude-work() {
+  CLAUDE_CONFIG_DIR="$HOME/.claude-work" command claude "$@"
+}
+
+# Shadow the bare command so the account is always a conscious choice.
+claude() {
+  print -u2 "claude is shadowed by a shell function from dotfiles (dotfiles/zshrc)."
+  print -u2 "Pick an account explicitly:"
+  print -u2 "  claude-personal   -> ~/.claude-personal"
+  print -u2 "  claude-work       -> ~/.claude-work"
+  print -u2 "To bypass this guard: command claude ..."
+  return 1
+}
+
 # Load machine-specific config if exists (not versioned)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
