@@ -136,5 +136,20 @@ claude() {
   return 1
 }
 
+# Editors hosting the Claude Code extension
+# claudeCode.environmentVariables only reaches the CLI the extension spawns. The
+# session list is built by the extension host itself, which reads
+# CLAUDE_CONFIG_DIR from VS Code's own process and falls back to ~/.claude --
+# empty, hence no history. Launching from here puts the variable in that process.
+# Apps opened from the Dock do not inherit this, and neither does an instance
+# that is already running (the shim forwards to it over IPC).
+code() {
+  CLAUDE_CONFIG_DIR="$HOME/.claude-work" command code "$@"
+}
+
+code-insiders() {
+  CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command code-insiders "$@"
+}
+
 # Load machine-specific config if exists (not versioned)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
