@@ -37,8 +37,6 @@ Individual scripts can be run separately:
   - `ssh/config`: SSH configuration
   - `ghostty/config`: Ghostty terminal configuration
 
-- **iterm2/**: iTerm2 preferences (loaded via defaults)
-
 ## Important Notes
 
 - The `execute` function runs commands in background without TTY access. Interactive commands (like Homebrew install) must be run directly.

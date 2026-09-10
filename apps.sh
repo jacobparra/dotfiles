@@ -11,14 +11,6 @@ print_title "Apps"
 
 brew_install "Font JetBrains Mono Nerd" "font-jetbrains-mono-nerd-font"
 
-brew_install "Iterm2" "iterm2"
-execute \
-    "defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string '$(pwd)/iterm2'" \
-    "Iterm2: Specify the preferences directory"
-execute \
-    "defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true" \
-    "Iterm2: Use the custom preferences directory"
-
 brew_install "Ghostty" "ghostty"
 
 brew_install "Visual Studio Code" "visual-studio-code"
