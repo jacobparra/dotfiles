@@ -121,6 +121,25 @@ else
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Personal scripts in bin/ are linked into ~/.local/bin, which zshrc puts
+# on the PATH.
+
+mkdir -p "$HOME/.local/bin"
+
+for sourceFile in "$(pwd)"/bin/*; do
+    targetFile="$HOME/.local/bin/$(basename "$sourceFile")"
+
+    if [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
+        print_success "$targetFile → $sourceFile"
+    else
+        rm -rf "$targetFile"
+        execute \
+            "ln -fs $sourceFile $targetFile" \
+            "$targetFile → $sourceFile"
+    fi
+done
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print_subtitle "Create local config files"
 

@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# Archive a local folder to Backblaze B2 and, once B2 is verified to hold an
+# identical copy, optionally move the local folder to the Trash.
+#
+# Usage: archive-to-b2 <folder> [<folder> ...]
+#
+# Each folder is uploaded to "$ARCHIVE_REMOTE/<folder name>". The B2 copy is the
+# only copy once the local one is gone, so the local folder is trashed only if
+# `rclone check` confirms every file matches by SHA1, and only after asking.
+#
+# The rclone remote should use an application key without deleteFiles, so no
+# rclone command run from this machine can remove anything from the archive.
+
+set -euo pipefail
+
+ARCHIVE_REMOTE="${ARCHIVE_REMOTE:-b2movies:dji-recordings}"
+
+# Finder litter is not worth archiving, and must be excluded from the check
+# too or it would show up as missing on the remote.
+RCLONE_FILTERS=(--exclude ".DS_Store" --exclude "._*")
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $(basename "$0") <folder> [<folder> ...]" >&2
+    echo "Remote: $ARCHIVE_REMOTE (override with ARCHIVE_REMOTE)" >&2
+    exit 1
+fi
+
+for dir in "$@"; do
+    if [ ! -d "$dir" ]; then
+        echo "Not a directory: $dir" >&2
+        exit 1
+    fi
+done
+
+for dir in "$@"; do
+    dir="${dir%/}"
+    dest="$ARCHIVE_REMOTE/$(basename "$dir")"
+
+    echo
+    echo "==> $dir → $dest ($(du -sh "$dir" | cut -f1))"
+
+    rclone copy "$dir" "$dest" "${RCLONE_FILTERS[@]}" \
+        --progress --transfers 4 --checkers 8
+
+    echo "==> Verifying SHA1 of every file against B2"
+    if ! rclone check "$dir" "$dest" "${RCLONE_FILTERS[@]}" --one-way; then
+        echo "!! Check failed for $dir — keeping the local copy." >&2
+        exit 1
+    fi
+
+    read -r -p "Verified. Move '$dir' to the Trash? [y/N] " answer
+    if [[ "$answer" =~ ^[yY]$ ]]; then
+        trash "$dir"
+        echo "==> Moved to the Trash (empty it to free the space)"
+    else
+        echo "==> Kept local copy"
+    fi
+done

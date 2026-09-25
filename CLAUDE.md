@@ -37,6 +37,9 @@ Individual scripts can be run separately:
   - `ssh/config`: SSH configuration
   - `ghostty/config`: Ghostty terminal configuration
 
+- **bin/**: Personal scripts, symlinked into `~/.local/bin` (on the PATH via `zshrc`)
+  - `archive-to-b2`: Uploads folders to Backblaze B2 with rclone, verifies SHA1, then offers to trash the local copy
+
 ## Important Notes
 
 - The `execute` function runs commands in background without TTY access. Interactive commands (like Homebrew install) must be run directly.
