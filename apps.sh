@@ -15,8 +15,6 @@ brew_install "Ghostty" "ghostty"
 
 brew_install "Visual Studio Code" "visual-studio-code"
 
-brew_install "Docker Desktop" "docker-desktop"
-
 brew_install "Postman" "postman"
 
 brew_install "rclone" "rclone"
