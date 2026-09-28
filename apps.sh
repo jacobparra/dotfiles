@@ -19,6 +19,8 @@ brew_install "Docker Desktop" "docker-desktop"
 
 brew_install "Postman" "postman"
 
+brew_install "rclone" "rclone"
+
 # Productivity
 
 brew_install "Google Chrome" "google-chrome"
