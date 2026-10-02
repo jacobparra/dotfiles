@@ -69,6 +69,12 @@ execute \
      defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false" \
     "No auto-capitalization, no period on double space"
 
+# Web views (Safari, Electron apps) read their own key.
+execute \
+    "defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false && \
+     defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false" \
+    "No autocorrect"
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 print_subtitle "Trackpad, appearance, screenshots"
