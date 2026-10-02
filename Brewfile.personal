@@ -5,7 +5,9 @@ brew "esphome"
 
 # Containers: Colima is the VM that runs them; docker and docker-compose
 # are just the CLI and its Compose plugin (no Docker Desktop). One-time,
-# with a fixed disk size: colima start --cpu 4 --memory 8 --disk 30
+# with a fixed disk size: colima start --cpu 2 --memory 4 --disk 30
+# Started and stopped by hand (colima start / colima stop), not as a
+# login service: it is only needed while working on a container project.
 brew "colima"
 brew "docker"
 brew "docker-compose"
