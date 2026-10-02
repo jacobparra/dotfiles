@@ -49,6 +49,28 @@ execute \
     "defaults write com.apple.finder FXDefaultSearchScope -string SCcf" \
     "Search the current folder"
 
+# List view already sorts by name by default. Icon views (the desktop
+# included) default to no arrangement; arranging by name also keeps the
+# icons snapped to the grid. The nested keys may not exist yet on a fresh
+# Mac, hence Add when Set fails (Add errors on existing parents are fine).
+finder_arrange_icons_by_name() {
+    local -r plist="$HOME/Library/Preferences/com.apple.finder.plist"
+    local view=""
+
+    for view in StandardViewSettings FK_StandardViewSettings DesktopViewSettings; do
+        /usr/libexec/PlistBuddy -c "Set :$view:IconViewSettings:arrangeBy name" "$plist" 2> /dev/null \
+            || {
+                /usr/libexec/PlistBuddy -c "Add :$view dict" "$plist" 2> /dev/null
+                /usr/libexec/PlistBuddy -c "Add :$view:IconViewSettings dict" "$plist" 2> /dev/null
+                /usr/libexec/PlistBuddy -c "Add :$view:IconViewSettings:arrangeBy string name" "$plist"
+            }
+    done
+}
+
+execute \
+    "finder_arrange_icons_by_name" \
+    "Icon views and desktop arranged by name (snapped to grid)"
+
 execute \
     "defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true && \
      defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true" \
