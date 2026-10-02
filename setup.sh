@@ -21,17 +21,17 @@ done &> /dev/null &
 
 ###################################################################
 
+# The role (personal/work) only picks the Brewfile; packages.sh asks for
+# it when not given here.
+
 ./homebrew.sh
+./packages.sh "$1"
 ./shell.sh
-./languages.sh
-./apps.sh
-./github_ssh.sh
+./tools.sh
+./github.sh
 
 ###################################################################
 
-print_title "Restart"
+print_title "Done"
 
-ask_for_confirmation "Do you want to restart?"
-if answer_is_yes; then
-    sudo shutdown -r now &> /dev/null
-fi
+print_warning "Open a new terminal to load the new shell setup."

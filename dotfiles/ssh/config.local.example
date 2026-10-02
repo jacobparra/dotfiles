@@ -1,22 +1,17 @@
 # Machine-specific SSH config
-# Copy to ~/.ssh/config.local and customize (setup.sh does this for you).
+# Copied to ~/.ssh/config.local by shell.sh and NOT versioned in git:
+# this repo is public, so anything host-, employer- or client-specific
+# belongs here rather than in the tracked config.
 #
-# Loaded by ~/.ssh/config via its Include directive and NOT versioned in
-# git, so anything host-, employer- or client-specific belongs here
-# rather than in the tracked config: this repo is public.
+# Keys are generated on each machine and never copied between them, and
+# each machine only lists the hosts it should reach. GitHub needs no
+# block: github.sh has gh create ~/.ssh/id_ed25519, which ssh tries on
+# its own.
 
 # - - - Work - - -
 
 # Host gitlab.example.com
-#   IdentityFile ~/.ssh/work_ed25519
-#   IdentitiesOnly yes
-#   LogLevel ERROR
-
-# A second GitHub account: the alias carries the key, HostName points at
-# the real server. Clone with git@github-work:org/repo.git
-# Host github-work
-#   HostName github.com
-#   IdentityFile ~/.ssh/github_work
+#   IdentityFile ~/.ssh/gitlab_ed25519
 #   IdentitiesOnly yes
 
 # - - - Personal servers - - -

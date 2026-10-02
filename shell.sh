@@ -7,127 +7,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_title "Setup shell"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-brew_install "Zsh" "zsh"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Install Oh-my-zsh
-
-if [ -d "$HOME/.oh-my-zsh" ]; then
-    print_success "Oh-my-zsh"
-else
-    execute \
-    "export RUNZSH=no && \
-        $(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-    "Oh-my-zsh"
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Install Powerlevel10k
-
-if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
-    print_success "Powerlevel10k ZSH theme"
-else
-    execute \
-        "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k" \
-        "Powerlevel10k ZSH theme"
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Install zsh-syntax-highlighting
-
-if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
-    print_success "zsh-syntax-highlighting"
-else
-    execute \
-        "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" \
-        "zsh-syntax-highlighting"
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Install zsh-autosuggestions
-
-if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
-    print_success "zsh-autosuggestions"
-else
-    execute \
-        "git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" \
-        "zsh-autosuggestions"
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-print_subtitle "Create symbolic links"
-
 declare -x DOTFILES_FOLDER="$(pwd)/dotfiles"
 
-declare -a FILES_TO_SYMLINK=(
-    "gitattributes"
-    "gitconfig"
-    "gitignore"
-    "ssh/config"
-    "zshrc"
-    "p10k.zsh"
-)
+# Point $2 at $1, replacing whatever is there unless it already does.
+link() {
+    local -r sourceFile="$1"
+    local -r targetFile="$2"
 
-declare i=""
-declare sourceFile=""
-declare targetFile=""
-
-for i in "${FILES_TO_SYMLINK[@]}"; do
-
-    sourceFile="$DOTFILES_FOLDER/$i"
-    targetFile="$HOME/.$i"
-
-    if [ ! -e "$targetFile" ]; then
-
-        execute \
-            "ln -fs $sourceFile $targetFile" \
-            "$targetFile → $sourceFile"
-
-    elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-
-        print_success "$targetFile → $sourceFile"
-
-    else
-
-        rm -rf "$targetFile"
-
-        execute \
-            "ln -fs $sourceFile $targetFile" \
-            "$targetFile → $sourceFile"
-
-    fi
-
-done
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Ghostty reads its config from XDG, not from a dotfile in $HOME, so it
-# needs its own link rather than a slot in FILES_TO_SYMLINK above.
-
-sourceFile="$DOTFILES_FOLDER/ghostty/config"
-targetFile="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
-
-mkdir -p "$(dirname "$targetFile")"
-
-if [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-    print_success "$targetFile → $sourceFile"
-else
-    rm -rf "$targetFile"
-    execute \
-        "ln -fs $sourceFile $targetFile" \
-        "$targetFile → $sourceFile"
-fi
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Personal scripts in bin/ are linked into ~/.local/bin, which zshrc puts
-# on the PATH.
-
-mkdir -p "$HOME/.local/bin"
-
-for sourceFile in "$(pwd)"/bin/*; do
-    targetFile="$HOME/.local/bin/$(basename "$sourceFile")"
+    mkdir -p "$(dirname "$targetFile")"
 
     if [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
         print_success "$targetFile → $sourceFile"
@@ -137,6 +24,35 @@ for sourceFile in "$(pwd)"/bin/*; do
             "ln -fs $sourceFile $targetFile" \
             "$targetFile → $sourceFile"
     fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_subtitle "Create symbolic links"
+
+# A fresh Mac has no ~/.ssh yet, and ssh refuses a group-readable one.
+mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
+
+declare -a FILES_TO_SYMLINK=(
+    "gitattributes"
+    "gitconfig"
+    "gitignore"
+    "ssh/config"
+    "zshrc"
+)
+
+for i in "${FILES_TO_SYMLINK[@]}"; do
+    link "$DOTFILES_FOLDER/$i" "$HOME/.$i"
+done
+
+# Ghostty and Starship read from XDG rather than from a dotfile in $HOME.
+link "$DOTFILES_FOLDER/ghostty/config" "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config"
+link "$DOTFILES_FOLDER/starship.toml" "${XDG_CONFIG_HOME:-$HOME/.config}/starship.toml"
+
+# Personal scripts in bin/ are linked into ~/.local/bin, which zshrc puts
+# on the PATH.
+for sourceFile in "$(pwd)"/bin/*; do
+    link "$sourceFile" "$HOME/.local/bin/$(basename "$sourceFile")"
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,3 +81,16 @@ for idx in "${!LOCAL_EXAMPLES[@]}"; do
             "$targetFile (created from example)"
     fi
 done
+
+# The commit email is the one setting that differs per machine, so it is
+# asked for instead of copied: gitconfig sets useConfigOnly, and without
+# this file git refuses to commit rather than guessing an identity.
+targetFile="$HOME/.gitconfig.local"
+
+if [ -e "$targetFile" ]; then
+    print_success "$targetFile (already exists)"
+else
+    ask "Email for git commits on this machine: "
+    printf "[user]\n    email = %s\n" "$(get_answer)" > "$targetFile"
+    print_result $? "$targetFile (created)"
+fi

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# On a fresh Mac, Homebrew is installed by homebrew.sh but is not on the
+# PATH of the scripts that run after it, so load it here for all of them.
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+fi
+
 print_title() {
     _print_in_purple "\n • $1\n\n"
 }
@@ -123,47 +129,6 @@ execute() {
 
 cmd_exists() {
     command -v "$1" &> /dev/null
-}
-
-brew_install() {
-
-    declare -r FORMULA="$2"
-    declare -r FORMULA_READABLE_NAME="$1"
-    declare -r TAP_VALUE="$3"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Check if `Homebrew` is installed.
-
-    if ! cmd_exists "brew"; then
-        print_error "$FORMULA_READABLE_NAME ('Homebrew' is not installed)"
-        return 1
-    fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # If `brew tap` needs to be executed,
-    # check if it executed correctly.
-
-    if [ -n "$TAP_VALUE" ]; then
-        if ! brew tap "$TAP_VALUE" &> /dev/null; then
-            print_error "$FORMULA_READABLE_NAME ('brew tap $TAP_VALUE' failed)"
-            return 1
-        fi
-    fi
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Install the specified formula.
-
-    if brew list "$FORMULA" &> /dev/null; then
-        print_success "$FORMULA_READABLE_NAME"
-    else
-        execute \
-            "brew install $FORMULA" \
-            "$FORMULA_READABLE_NAME"
-    fi
-
 }
 
 _print_in_color() {

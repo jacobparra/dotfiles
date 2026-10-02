@@ -1,0 +1,14 @@
+# Packages for the personal machine, on top of Brewfile.
+
+brew "rclone"
+brew "esphome"
+
+cask "orcaslicer"
+cask "tailscale-app"
+cask "google-earth-pro"
+
+# Installed by hand, on purpose:
+#   - Autodesk Fusion: ships its own updater and uninstaller, which fight
+#     with the cask
+#   - DaVinci Resolve: no cask, the download sits behind a registration form
+#   - Raspberry Pi Imager: brew install --cask raspberry-pi-imager, when needed

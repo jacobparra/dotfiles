@@ -62,11 +62,11 @@
 
     useConfigOnly = true
     name = "Jacob Parra"
-    email = "jacobrpg@gmail.com"
     # signingkey =
-[credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+
+    # The email differs per machine, so it lives in ~/.gitconfig.local,
+    # which shell.sh creates. Included last so it can override anything above.
+
+[include]
+
+    path = ~/.gitconfig.local

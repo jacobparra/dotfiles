@@ -1,0 +1,18 @@
+# Packages for the work machine, on top of Brewfile.
+
+brew "glab"
+brew "cloudflared"
+brew "nginx"
+brew "firebase-cli"
+brew "anomalyco/tap/opencode"
+
+cask "gcloud-cli"
+cask "postman"
+
+# Both self-update; IT may already have installed them, in which case
+# brew bundle reports them as failed and carries on.
+cask "microsoft-teams"
+cask "slack"
+
+# Installed by hand, on purpose:
+#   - LenovoAcc & DisplayManager: Lenovo headset companion (Teams sync), no cask

@@ -1,0 +1,14 @@
+# Starship prompt. Docs: https://starship.rs/config/
+# The defaults already cover what matters here (git status, Node version
+# next to package.json or .nvmrc, Python version and active virtualenv,
+# slow command duration), so this only overrides the noisy bits.
+
+"$schema" = "https://starship.rs/config-schema.json"
+
+# Git status in large repos can exceed the 500ms default and print a
+# warning on every prompt.
+command_timeout = 1000
+
+# Shown in every directory once gcloud is configured, account email included.
+[gcloud]
+disabled = true

@@ -1,18 +1,17 @@
 # Machine-specific shell config
-# Copy this file to ~/.zshrc.local and customize
+# Copied to ~/.zshrc.local by shell.sh, and NOT versioned in git: this
+# repo is public, so tokens and employer- or client-specific bits go here.
 #
-# This file is sourced by ~/.zshrc at the end
-# and is NOT versioned in git
+# Sourced by ~/.zshrc after everything else except the zsh plugins.
 
-# Example: Personal machine
-# alias homelab="ssh homelab"
-# export PROJECTS=~/Code
+# Example: a token a package registry needs
+# export NPM_TOKEN=...
 
-# Example: Work machine
-# alias k="kubectl"
-# alias vpn="networksetup -connectpppoeservice 'Company VPN'"
-# export KUBECONFIG=~/.kube/work-config
-# export WORK_PROJECT=~/Work/main-repo
-
-# Example: Add to PATH
-# export PATH="$HOME/.local/bin:$PATH"
+# Example: a second Claude Code account. ~/.claude stays the machine's own
+# account; the wrapper points the CLI at a separate config directory.
+# The Keychain item name derives from a hash of this exact path, so never
+# change its spelling (a trailing slash yields a different item and a lost
+# login).
+# claude-personal() {
+#   CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command claude "$@"
+# }

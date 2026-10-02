@@ -1,10 +1,8 @@
 # Load machine-specific config (not versioned)
 Include config.local
 
-Host github.com
-  IdentityFile ~/.ssh/github
-  IdentitiesOnly yes
-  LogLevel ERROR
+# No GitHub block: github.sh has gh generate the default key
+# (~/.ssh/id_ed25519), which ssh already tries on its own.
 
 # Keep this block last: ssh_config applies the first value it finds for
 # each keyword, so a catch-all placed above would win over the host

@@ -1,158 +1,63 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Homebrew lives in /opt/homebrew on Apple Silicon, which is not on the
+# default PATH. Load it first so everything below can find brew's tools.
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Personal scripts from the dotfiles repo's bin/, linked here by shell.sh.
+# Personal scripts from the dotfiles repo's bin/ (linked by shell.sh), and
+# the Claude Code CLI, which its native installer puts here.
 export PATH="$HOME/.local/bin:$PATH"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  zsh-better-npm-completion
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# - - - History - - -
+# macOS keeps 1000 entries and only writes them when a shell exits;
+# share_history makes each command available in other tabs right away.
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt share_history
+setopt extended_history       # store timestamps
+setopt hist_ignore_all_dups
+setopt hist_ignore_space      # a leading space keeps a command (and any token in it) out
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# - - - Completion - - -
 
-# Claude Code accounts
-# No default profile: ~/.claude must not exist, so any invocation that skips
-# these functions (the VS Code extension, hooks, cron) lands on an unauthenticated
-# profile instead of silently using the personal account.
-# The Keychain item name derives from a hash of this exact string, so never
-# change the spelling (a trailing slash yields a different item and a lost login).
-claude-personal() {
-  CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command claude "$@"
-}
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'   # case-insensitive
+zstyle ':completion:*' menu select                       # arrow through matches
 
-claude-work() {
-  CLAUDE_CONFIG_DIR="$HOME/.claude-work" command claude "$@"
-}
+# - - - Keybindings - - -
+# Emacs mode, set explicitly: zsh picks vi mode on its own when $EDITOR or
+# $VISUAL mentions vi. Up/Down search history for lines starting with
+# whatever is already typed.
 
-# Shadow the bare command so the account is always a conscious choice.
-claude() {
-  print -u2 "claude is shadowed by a shell function from dotfiles (dotfiles/zshrc)."
-  print -u2 "Pick an account explicitly:"
-  print -u2 "  claude-personal   -> ~/.claude-personal"
-  print -u2 "  claude-work       -> ~/.claude-work"
-  print -u2 "To bypass this guard: command claude ..."
-  return 1
-}
+bindkey -e
 
-# Editors hosting the Claude Code extension
-# claudeCode.environmentVariables only reaches the CLI the extension spawns. The
-# session list is built by the extension host itself, which reads
-# CLAUDE_CONFIG_DIR from VS Code's own process and falls back to ~/.claude --
-# empty, hence no history. Launching from here puts the variable in that process.
-# Apps opened from the Dock do not inherit this, and neither does an instance
-# that is already running (the shim forwards to it over IPC).
-code() {
-  CLAUDE_CONFIG_DIR="$HOME/.claude-work" command code "$@"
-}
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
 
-code-insiders() {
-  CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command code-insiders "$@"
-}
+# - - - Tools - - -
+
+# Node: switch to the version in a repo's .nvmrc on cd. fnm keeps that
+# version after leaving the repo; `fnm use default` goes back. The prompt
+# already shows the active version, so only errors are printed (a missing
+# version still offers to install itself).
+eval "$(fnm env --use-on-cd --log-level error --shell zsh)"
+
+# Ctrl+R fuzzy history search, Ctrl+T fuzzy file picker.
+source <(fzf --zsh)
+
+eval "$(starship init zsh)"
 
 # Load machine-specific config if exists (not versioned)
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Plugins go last: syntax highlighting must load after every other widget
+# is defined, including any from ~/.zshrc.local.
+source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
