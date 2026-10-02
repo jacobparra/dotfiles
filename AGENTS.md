@@ -19,6 +19,7 @@ Individual scripts can be run separately:
 ./packages.sh <role>     # brew bundle: Brewfile + Brewfile.<role>
 ./shell.sh               # Symlinks + per-machine *.local files
 ./tools.sh               # Node.js default via fnm + Claude Code (native installer)
+./macos.sh               # macOS preferences (defaults write)
 ./github.sh              # gh auth login (creates and uploads the SSH key)
 ```
 

@@ -30,6 +30,7 @@ The setup process will:
   `~/.zshrc.local`, `~/.ssh/config.local` and `~/.gitconfig.local`
   (it asks for the commit email).
 * Install [tools](tools.sh): Node.js through `fnm`, and Claude Code.
+* Apply [macOS preferences](macos.sh): Dock, Finder, keyboard, trackpad.
 * Log in to [GitHub](github.sh) with `gh`, which creates and uploads the
   SSH key.
 

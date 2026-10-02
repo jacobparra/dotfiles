@@ -28,6 +28,7 @@ done &> /dev/null &
 ./packages.sh "$1"
 ./shell.sh
 ./tools.sh
+./macos.sh
 ./github.sh
 
 ###################################################################
