@@ -7,7 +7,6 @@ brew "firebase-cli"
 brew "anomalyco/tap/opencode"
 
 cask "gcloud-cli"
-cask "postman"
 
 # Both self-update; IT may already have installed them, in which case
 # brew bundle reports them as failed and carries on.

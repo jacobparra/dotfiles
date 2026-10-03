@@ -15,6 +15,7 @@ brew "docker-compose"
 cask "orcaslicer"
 cask "tailscale-app"
 cask "google-earth-pro"
+cask "google-drive"
 
 # Installed by hand, on purpose:
 #   - Autodesk Fusion: ships its own updater and uninstaller, which fight
