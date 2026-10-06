@@ -15,10 +15,29 @@ print_title "Setup GitHub"
 
 if gh auth status &> /dev/null; then
     print_success "GitHub ($(gh api user --jq .login 2> /dev/null))"
-    exit 0
+else
+    # Not wrapped in `execute`: the login is interactive.
+    gh auth login --hostname github.com --git-protocol ssh --web
+    print_result $? "GitHub" || exit 1
 fi
 
-# Not wrapped in `execute`: the login is interactive.
-gh auth login --hostname github.com --git-protocol ssh --web
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# The setup snippet clones this repo over HTTPS, since there is no key
+# yet. Switch it to SSH so it can be pushed, but only when gh is logged in
+# as the repo's owner: on a machine with another account (work), the
+# HTTPS clone stays read-only on purpose.
 
-print_result $? "GitHub"
+declare -r REMOTE="$(git remote get-url origin 2> /dev/null)"
+
+if [[ "$REMOTE" =~ ^https://github\.com/([^/]+)/([^/]+)$ ]]; then
+    owner="${BASH_REMATCH[1]}"
+    repo="${BASH_REMATCH[2]%.git}"
+
+    if [ "$(gh api user --jq .login 2> /dev/null)" == "$owner" ]; then
+        execute \
+            "git remote set-url origin git@github.com:$owner/$repo.git" \
+            "dotfiles remote → git@github.com:$owner/$repo.git"
+    else
+        print_success "dotfiles remote stays on HTTPS (read-only here)"
+    fi
+fi
