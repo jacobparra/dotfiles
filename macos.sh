@@ -46,6 +46,19 @@ execute \
     "Show extensions and path bar, folders first"
 
 execute \
+    "defaults write com.apple.finder ShowStatusBar -bool true && \
+     defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false" \
+    "Show status bar, no warning when changing an extension"
+
+execute \
+    "defaults write com.apple.finder ShowRecentTags -bool false" \
+    "No Tags section in the sidebar"
+
+execute \
+    "chflags nohidden $HOME/Library" \
+    "Show ~/Library"
+
+execute \
     "defaults write com.apple.finder FXDefaultSearchScope -string SCcf" \
     "Search the current folder"
 
@@ -141,3 +154,6 @@ execute \
     "Restart Dock, Finder, SystemUIServer and ControlCenter"
 
 print_warning "Key repeat and trackpad changes apply after logging out."
+
+# Sidebar favorites live in a TCC-protected binary file, not in defaults.
+print_warning "Drag ~/Code to the Finder sidebar favorites by hand."
