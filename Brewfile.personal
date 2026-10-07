@@ -14,7 +14,6 @@ brew "docker-compose"
 
 cask "orcaslicer"
 cask "tailscale-app"
-cask "google-earth-pro"
 cask "google-drive"
 
 # Installed by hand, on purpose:
