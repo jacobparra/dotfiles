@@ -19,5 +19,6 @@ cask "google-drive"
 # Installed by hand, on purpose:
 #   - Autodesk Fusion: ships its own updater and uninstaller, which fight
 #     with the cask
-#   - DaVinci Resolve: no cask, the download sits behind a registration form
+#   - DaVinci Resolve: no cask; on the Mac App Store (mas id 571213070), but
+#     that build is sandboxed and several GB
 #   - Raspberry Pi Imager: brew install --cask raspberry-pi-imager, when needed
