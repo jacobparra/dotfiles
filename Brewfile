@@ -23,7 +23,6 @@ cask "visual-studio-code"
 cask "google-chrome"
 cask "claude"
 cask "eddmann/tap/claudemeter"
-cask "keka"
 cask "logi-options+"
 cask "monitorcontrol"
 
