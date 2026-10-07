@@ -118,8 +118,26 @@ execute \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+print_subtitle "Menu bar"
+
+# Per-host keys; 18 means always show in the menu bar.
 execute \
-    "killall Dock Finder SystemUIServer" \
-    "Restart Dock, Finder and SystemUIServer"
+    "defaults -currentHost write com.apple.controlcenter Bluetooth -int 18 && \
+     defaults -currentHost write com.apple.controlcenter Sound -int 18" \
+    "Always show Bluetooth and Sound"
+
+execute \
+    "defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true" \
+    "Battery percentage"
+
+execute \
+    "defaults write NSGlobalDomain AppleICUForce24HourTime -bool true" \
+    "24-hour clock"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+execute \
+    "killall Dock Finder SystemUIServer ControlCenter" \
+    "Restart Dock, Finder, SystemUIServer and ControlCenter"
 
 print_warning "Key repeat and trackpad changes apply after logging out."
