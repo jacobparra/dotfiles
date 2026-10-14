@@ -160,12 +160,13 @@ print_subtitle "Menu bar"
 # Per-host keys; 18 means always show in the menu bar.
 execute \
     "defaults -currentHost write com.apple.controlcenter Bluetooth -int 18 && \
-     defaults -currentHost write com.apple.controlcenter Sound -int 18" \
-    "Always show Bluetooth and Sound"
+     defaults -currentHost write com.apple.controlcenter Sound -int 18 && \
+     defaults -currentHost write com.apple.controlcenter WiFi -int 18" \
+    "Always show Bluetooth, Sound and Wi-Fi"
 
 execute \
-    "defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true" \
-    "Battery percentage"
+    "defaults write com.apple.TextInputMenu visible -bool true" \
+    "Show the keyboard input menu"
 
 execute \
     "defaults write NSGlobalDomain AppleICUForce24HourTime -bool true" \
