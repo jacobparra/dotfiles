@@ -99,6 +99,25 @@ execute \
      defaults write NSGlobalDomain InitialKeyRepeat -int 15" \
     "Fast key repeat"
 
+# Keeps the layout chosen during setup (Latin American) and adds U.S.
+# (layout ID 0) unless it's already there. Takes effect after logging out.
+add_us_keyboard_layout() {
+    defaults read com.apple.HIToolbox AppleEnabledInputSources 2> /dev/null \
+        | grep -q '"KeyboardLayout ID" = 0;' \
+        && return
+
+    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
+        '<dict>
+            <key>InputSourceKind</key><string>Keyboard Layout</string>
+            <key>KeyboardLayout ID</key><integer>0</integer>
+            <key>KeyboardLayout Name</key><string>U.S.</string>
+        </dict>'
+}
+
+execute \
+    "add_us_keyboard_layout" \
+    "U.S. keyboard layout"
+
 execute \
     "defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false && \
      defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false" \
@@ -120,6 +139,11 @@ execute \
      defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true && \
      defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1" \
     "Tap to click"
+
+execute \
+    "defaults write NSGlobalDomain com.apple.trackpad.scaling -float 1 && \
+     defaults write NSGlobalDomain com.apple.mouse.scaling -float 1" \
+    "Faster trackpad and mouse tracking"
 
 execute \
     "defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true" \
