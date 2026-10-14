@@ -25,11 +25,11 @@ cask "claude"
 cask "eddmann/tap/claudemeter"
 cask "logi-options+"
 cask "monitorcontrol"
+cask "rectangle"
 
 # Mac App Store: needs a signed-in App Store, which a managed Mac may not
 # allow. brew bundle reports these as failed and carries on with the rest.
 brew "mas"
-mas "Magnet", id: 441258766
 mas "Amphetamine", id: 937984704
 mas "WhatsApp", id: 310633997
 

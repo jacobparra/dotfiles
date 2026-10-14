@@ -155,6 +155,54 @@ execute \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+print_subtitle "Window tiling"
+
+# macOS tiling clashes with Rectangle's snap areas.
+execute \
+    "defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false && \
+     defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false && \
+     defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false" \
+    "No macOS tiling (edge drag, top edge, Option key)"
+
+# The top edge goes to Rectangle's center two thirds, so maximizing is a
+# double-click on the title bar.
+execute \
+    "defaults write NSGlobalDomain AppleActionOnDoubleClick -string Fill" \
+    "Double-click on a title bar fills the screen"
+
+# Snap areas only, no keyboard shortcuts. Rectangle overwrites its prefs on
+# quit, hence quitting it first.
+#
+# Landscape snap areas, as {position: action}. Positions: 1-3 top corners
+# and edge, 4/5 left/right edges, 6-8 bottom. Action 84 is center two
+# thirds and 15/16/13/14 the four quarters; compound -2/-3 are halves
+# (top/bottom near the corners) and -4 is thirds along the bottom edge.
+configure_rectangle() {
+    local -r domain="com.knollsoft.Rectangle"
+    local action=""
+
+    osascript -e 'quit app "Rectangle"' 2> /dev/null
+
+    # An empty dict overrides the built-in default shortcut.
+    for action in leftHalf rightHalf topHalf bottomHalf \
+                  topLeft topRight bottomLeft bottomRight \
+                  firstThird centerThird lastThird \
+                  firstTwoThirds centerTwoThirds lastTwoThirds \
+                  maximize maximizeHeight larger smaller center restore \
+                  previousDisplay nextDisplay; do
+        defaults write "$domain" "$action" -dict
+    done
+
+    defaults write "$domain" landscapeSnapAreas -string \
+        '[2,{"action":84},5,{"compound":-3},1,{"action":15},3,{"action":16},8,{"action":14},4,{"compound":-2},6,{"action":13},7,{"compound":-4}]'
+}
+
+execute \
+    "configure_rectangle" \
+    "Rectangle: snap areas, no shortcuts (top edge: center two thirds)"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 print_subtitle "Menu bar"
 
 # Per-host keys; 18 means always show in the menu bar.
