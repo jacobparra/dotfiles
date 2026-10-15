@@ -16,6 +16,7 @@ cask "orcaslicer"
 cask "freecad"
 cask "tailscale-app"
 cask "google-drive"
+cask "eddmann/tap/claudemeter"
 
 # Installed by hand, on purpose:
 #   - Autodesk Fusion: ships its own updater and uninstaller, which fight

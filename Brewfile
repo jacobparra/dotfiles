@@ -22,7 +22,6 @@ cask "visual-studio-code"
 # Productivity
 cask "google-chrome"
 cask "claude"
-cask "eddmann/tap/claudemeter"
 cask "logi-options+"
 cask "monitorcontrol"
 cask "rectangle"

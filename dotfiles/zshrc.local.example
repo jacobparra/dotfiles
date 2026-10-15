@@ -6,12 +6,3 @@
 
 # Example: a token a package registry needs
 # export NPM_TOKEN=...
-
-# Example: a second Claude Code account. ~/.claude stays the machine's own
-# account; the wrapper points the CLI at a separate config directory.
-# The Keychain item name derives from a hash of this exact path, so never
-# change its spelling (a trailing slash yields a different item and a lost
-# login).
-# claude-personal() {
-#   CLAUDE_CONFIG_DIR="$HOME/.claude-personal" command claude "$@"
-# }
